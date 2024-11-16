@@ -19,3 +19,7 @@
 010010 - request change in bearing
 010011 - request change in bearing
 010100 - mayday
+010101-010111 is reserved
+011000 - waypoint has been reached
+011001 - waypoint unreachable, requesting different path
+011010 - colision iminent, drop altitude 
