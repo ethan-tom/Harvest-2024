@@ -13,7 +13,7 @@
 001100 - request change in airspeed
 001101 - accept change in airspeed
 001110 - query service ceiling (upper)
-//001111 - query service ceiling (lower)
+001111 - query service ceiling (lower)
 010000 - query aircraft type 
 010001 - query load type
 010010 - request change in bearing
@@ -23,3 +23,7 @@
 011000 - waypoint has been reached
 011001 - waypoint unreachable, requesting different path
 011010 - colision iminent, drop altitude 
+011011 - request change in altitude
+011100 - accept change in altitude
+011101 - query altitude
+011110 - 

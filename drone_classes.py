@@ -33,5 +33,6 @@ class DroneBase:
     def altitude_change(self, new_alt, station_sdr):
         if new_alt>self.up_ceiling or new_alt<self.lower_ceiling:
             raise SystemExit()
-        transmit(self, new_alt, , station_sdr)
+        while 0:
+            transmit(self, new_alt, cmds[" "], station_sdr)
 

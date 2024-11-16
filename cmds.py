@@ -22,7 +22,11 @@ cmds={"emg_land_lat":0b000000,
       "mayday":0b010100,
       "wypnt_rchd":0b011000,
       "wypnt_unrchd":0b011001,
-      "cllsn":0b011010 }
+      "cllsn":0b011010,
+      "req_dalt":0b011011, 
+      "acc_dalt":0b011100,
+      "query_alt":0b011101
+      }
 '''
 lat and long is longitude and latitiude ,
 emg is emergency ,
