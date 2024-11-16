@@ -1,0 +1,21 @@
+000000 - emergency landing, latitude
+000001 - emergency landing, longitude
+000010 - query final destination, latitude
+000011 - query final destination, longitude
+000100 - query current location, latitude
+000101 - query current location, longitude
+000110 - query true airspeed 
+000111 - query aircraft type
+001000 - query max speed
+001001 - request change in frequency
+001010 - accept change in frequency 
+001011 - deny change in frequency
+001100 - request change in airspeed
+001101 - accept change in airspeed
+001110 - query service ceiling (upper)
+001111 - query service ceiling (lower)
+010000 - query aircraft type 
+010001 - query load type
+010010 - request change in bearing
+010011 - request change in bearing
+010100 - mayday

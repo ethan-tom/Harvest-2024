@@ -20,6 +20,8 @@ class DroneBase:
         self.regno = int(np.loadtxt("reginfo.txt")[0])
         self.regnohash = hash(self.regno)
         self.flight_type = 0 # indexing : 0 - Multirotor, 1 - heavy multirotor, 2- fixed wing, 3- single rotor
+        self.max_accel_linear = 1
+        self.max_turn_rate = 30 # in deg/s
 
     
     def set_path(self, newpath):
@@ -29,5 +31,5 @@ class DroneBase:
             self.path = newpath
     
     def altitude_change(self, new_alt):
-        transmit()
+        pass
 
