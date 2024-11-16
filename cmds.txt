@@ -13,7 +13,7 @@
 001100 - request change in airspeed
 001101 - accept change in airspeed
 001110 - query service ceiling (upper)
-001111 - query service ceiling (lower)
+//001111 - query service ceiling (lower)
 010000 - query aircraft type 
 010001 - query load type
 010010 - request change in bearing
