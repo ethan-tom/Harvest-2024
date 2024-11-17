@@ -86,3 +86,21 @@ def transmit(drone, data, command, station_sdr):
 
 def bitconstruct(cmd, regno, dtype, data, parity, id):
    return(cmd<<58) | (regno<<42) | (dtype<<40) | (data<<8) | (parity<<1) | id
+
+def turnOffK(n,k):
+    # Do & of n with a number
+    # with all set bits except
+    # the k'th bit
+   for j in range(k):
+      n= (n & ~(1 << (j - 1)))
+   return n
+
+
+def reverse_bitconstruct(encoded_value): 
+   cmd = encoded_value>>58
+   regno = turnOffK(encoded_value>>42, 5)
+   dtype = turnOffK(encoded_value>>40, 22)
+   data = turnOffK(encoded_value>>8, 24)
+   parity = turnOffK(encoded_value>>1, 56)
+   id = turnOffK(encoded_value, 63)
+   return cmd, regno, dtype, data, parity, id

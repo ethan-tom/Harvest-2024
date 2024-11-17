@@ -31,7 +31,7 @@ class DroneBase:
     
     def set_path(self, newpath):
         if is_coliding(newpath):
-            raise collsionAlert()
+            collisionAlert(self)
         list_paths.append(newpath)
         if newpath.speed>self.max_speed:
             raise overspeedAlert()
@@ -41,16 +41,37 @@ class DroneBase:
     def altitude_change(self, new_alt, station_sdr):
         if new_alt>self.up_ceiling or new_alt<self.lower_ceiling:
             raise SystemExit()
-        while receive(self, station_sdr)==(bitconstruct(cmds["acc_dalt", self.regnohash, 0b11, 0, 0, 0])):
+        while not receive(self, station_sdr)==(bitconstruct(cmds["acc_dalt", self.regnohash, 0b11, 0, 0, 0])):
             transmit(self, new_alt, cmds["req_dalt"], station_sdr)
         self.altitude=new_alt
+
+    def bearing_change(self, station_sdr, new_br):
+        while not (receive(self,station_sdr)==bitconstruct(cmds["a_change_br", self.regnohash, 0b11, 0, 0, 0])):
+            transmit(self, new_br, cmds["r_change_br"], station_sdr)
+        self.bearing=new_br
+    
+    def speed_change(self, station_sdr, new_spd):
+        while not (receive(self, station_sdr)==bitconstruct(cmds["a_spd_change", self.regnohash, 0b11, 0, 0, 0])):
+            transmit(self, new_spd, cmds["r_spd_change"], station_sdr)
+        self.speed=new_spd
     
     def updateall(self, station_sdr):
-        while receive(self, station_sdr)==(bitconstruct(cmds["a_change_br", self.regnohash, 0b11, 0, 0, 0])):
+        self.bearing = self.current_path.pathto.heading
+        while not receive(self, station_sdr)==(bitconstruct(cmds["a_change_br", self.regnohash, 0b11, 0, 0, 0])):
             transmit(self, self.bearing, cmds["r_change_br"], station_sdr)
-        while receive(self, station_sdr)==(bitconstruct(cmds["a_spd_change", self.regnohash, 0b11, 0, 0, 0])):
+        while not receive(self, station_sdr)==(bitconstruct(cmds["a_spd_change", self.regnohash, 0b11, 0, 0, 0])):
             transmit(self, self.current_path.speed, cmds["r_spd_change"], station_sdr)
-        cmd_set = ["qloc_lat", "qloc_long", "qspdmax", "qtype", "q_airspd", "qscup", "q_load"]
+        try:
+            newtype, newload = checkdata(self, station_sdr)
+        except badRfAlert():
+            self.altitude_change(self.altitude, station_sdr)
+            self.bearing_change(self.bearing, station_sdr)
+            self.flight_type = newtype
+            self.load_type = newload
+            self.speed=self.current_path.speed
+
+        
+
         
 
 
