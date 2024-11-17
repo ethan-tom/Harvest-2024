@@ -96,7 +96,7 @@ def turnOffK(n,k):
    return n
 
 
-def reverse_bitconstruct(encoded_value): 
+def bit_deconstruct(encoded_value): 
    cmd = encoded_value>>58
    regno = turnOffK(encoded_value>>42, 5)
    dtype = turnOffK(encoded_value>>40, 22)

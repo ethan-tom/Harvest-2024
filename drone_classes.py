@@ -30,9 +30,12 @@ class DroneBase:
 
     
     def set_path(self, newpath):
-        if is_coliding(newpath):
-            collisionAlert(self)
-        list_paths.append(newpath)
+        try:
+            if is_coliding(newpath):
+                list_paths.append(newpath)
+        except collisionException():
+            pass
+
         if newpath.speed>self.max_speed:
             raise overspeedAlert()
         if not newpath==self.path:
@@ -62,13 +65,15 @@ class DroneBase:
         while not receive(self, station_sdr)==(bitconstruct(cmds["a_spd_change", self.regnohash, 0b11, 0, 0, 0])):
             transmit(self, self.current_path.speed, cmds["r_spd_change"], station_sdr)
         try:
-            newtype, newload = checkdata(self, station_sdr)
+            new = checkdata(self, station_sdr)
         except badRfAlert():
             self.altitude_change(self.altitude, station_sdr)
             self.bearing_change(self.bearing, station_sdr)
-            self.flight_type = newtype
-            self.load_type = newload
+            self.flight_type = new[0]
+            self.load_type = new[1]
             self.speed=self.current_path.speed
+        except badInfoAlert():
+            pass
 
         
 
