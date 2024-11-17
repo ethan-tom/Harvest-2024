@@ -9,6 +9,8 @@ def parsein(indata, N, drone, inrate):
     time_table=list(N)
     for i in range(N):
        time_table = i*inrate
+    
+    
  
        
 

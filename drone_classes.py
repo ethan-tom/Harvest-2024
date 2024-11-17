@@ -1,11 +1,16 @@
 import numpy as np
+from typing import TYPE_CHECKING, List
+
+if TYPE_CHECKING:
+    from ethan1 import waypointBase
+    from paths import PathBase
 
 
 # all distances in meters, heights in meters, speeds in meters per second and times in seconds
 class DroneBase:
     def __init__(self, locat_curr, path_curr):
         self.freq = 400e6
-        self.paths_used = None
+        self.paths_used : List[PathBase]= list()
         self.bearing = 0.0
         self.speed = 4
         self.altitude = 300
@@ -25,6 +30,8 @@ class DroneBase:
 
     
     def set_path(self, newpath):
+        is_coliding(newpath)
+        list_paths.append(newpath)
         if newpath.speed>self.max_speed:
             raise SystemExit()
         if not newpath==self.path:
@@ -34,5 +41,5 @@ class DroneBase:
         if new_alt>self.up_ceiling or new_alt<self.lower_ceiling:
             raise SystemExit()
         while 0:
-            transmit(self, new_alt, cmds[" "], station_sdr)
+            transmit(self, new_alt, cmds["req_dalt"], station_sdr)
 
