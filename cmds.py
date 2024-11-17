@@ -1,8 +1,8 @@
 import numpy as np 
 
 
+from paths import waypointBase
 if TYPE_CHECKING:
-    from ethan1 import waypointBase
     from paths import PathBase
     from drone_classes import DroneBase
 
@@ -52,7 +52,7 @@ wypnt is waypoint'''
 cmd_set = ["qloc_lat", "qloc_long", "qtype", "q_airspd", "qscup", "qsclow", "q_load"]
 
 def checkdata(drone : DroneBase, station_sdr):
-      out = [0,0,0]      
+      out = [0, 0, 0, 0, 0, 0, 0]      
       transmit(drone,0,cmd[cmd_set[0]], station_sdr)
       object = receive(drone, station_sdr)
       cmd_rx, regno, dtype, data, _, id = bit_deconstruct(object)
@@ -78,8 +78,19 @@ def checkdata(drone : DroneBase, station_sdr):
       if not (cmd_rx==cmds["dat_resp"] or regno==drone.regnohash or dtype==1 or id==1):
             raise badRfAlert()
       out[2] = data
-
-
+      transmit(drone,0,cmd["qdest_fin_lat"], station_sdr)
+      object = receive(drone, station_sdr)
+      cmd_rx, regno, dtype, data, _, id = bit_deconstruct(object)
+      if not (cmd_rx==cmds["dat_resp"] or regno==drone.regnohash or dtype==1 or id==1):
+            raise badRfAlert()
+      templat = data
+      transmit(drone,0,cmd["qdest_fin_long"], station_sdr)
+      object = receive(drone, station_sdr)
+      cmd_rx, regno, dtype, data, _, id = bit_deconstruct(object)
+      if not (cmd_rx==cmds["dat_resp"] or regno==drone.regnohash or dtype==1 or id==1):
+            raise badRfAlert()
+      templong = data
+      out[3]= waypointBase(templat, templong)
       verify_set = [drone.up_ceiling, drone.lower_ceiling]
 
       for x in range(2):

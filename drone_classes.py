@@ -2,13 +2,12 @@ import numpy as np
 from typing import TYPE_CHECKING, List
 
 if TYPE_CHECKING:
-    from ethan1 import waypointBase
-    from paths import PathBase
+    from paths import PathBase, waypointBase
 
 
 # all distances in meters, heights in meters, speeds in meters per second and times in seconds
 class DroneBase:
-    def __init__(self, locat_curr, path_curr: PathBase, maxspeed = 0, final_dest):
+    def __init__(self, locat_curr, path_curr: PathBase, final_dest, maxspeed = 0):
         self.up_ceiling = 1200  # TODO: add adaptive upper ceiling based on drone type and usage
         self.lower_ceiling = 200 # TODO: add adaptive lower ceiling based on city topography
         self.emergency_speed = 5 # TODO: add adaptive emergency power based on drone type and usage
@@ -75,10 +74,11 @@ class DroneBase:
         except badRfAlert():
             self.altitude_change(self.altitude, station_sdr)
             self.bearing_change(self.bearing, station_sdr)
-            self.flight_type = new[0]
-            self.load_type = new[1]
+            self.flight_type = new[0] if not new[0]==0 else None 
+            self.load_type = new[1] if not new[1]==0 else None 
             self.speed=self.current_path.speed
-            self.truespeed = new[2]
+            self.truespeed = new[2] if not new[2]==0 else None 
+            self.final_dest = new[3] if not new[3]==0 else None 
         except badInfoAlert():
             pass
         

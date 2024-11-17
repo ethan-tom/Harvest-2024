@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, List
 import numpy as np
 if TYPE_CHECKING:
     from drone_classes import DroneBase
-    from ethan1 import waypointBase
+    from paths import waypointBase
 from paths import PathBase
 
 list_drones : List[DroneBase] = list()  

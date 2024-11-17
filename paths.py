@@ -2,7 +2,14 @@ import numpy as np
 from typing import TYPE_CHECKING, List
 if TYPE_CHECKING:
     from drone_classes import DroneBase
-    from ethan1 import waypointBase
+
+
+
+class waypointBase:
+    def __init__(self, lat, long):
+        self.latitude = lat
+        self.longitude = long
+
 
 def line_constructor(pointA : waypointBase, pointB: waypointBase):
     deg_to_rad = np.pi/180
