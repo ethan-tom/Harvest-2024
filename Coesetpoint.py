@@ -113,8 +113,3 @@ def closest(P, n):
     # Use recursive function closestUtil() to find the smallest distance
     return closestUtil(Px, Py, n)
  
-# Driver program to test above functions
-if __name__ == '__main__':
-    P = [Point(2, 3), Point(12, 30), Point(40, 50), Point(5, 1), Point(12, 10), Point(3, 4)]
-    n = len(P)
-    print("The smallest distance is", closest(P, n))
