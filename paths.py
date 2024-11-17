@@ -37,7 +37,6 @@ class PathBase:
         self.paint_B = pointB
         self.pathto = LowLevelPath(pointA, pointB)
         self.speed = 0
-        self.pathfrom = LowLevelPath(pointB, pointA)
         self.counter = 10
     
 

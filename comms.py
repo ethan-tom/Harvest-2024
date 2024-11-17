@@ -76,11 +76,13 @@ def transmit(drone, data, command, station_sdr):
     elif type(data)==None:
        bull = 0b10
     else:
-       bull = 0b11 # bull- dtype bits, 01 = float, int  = 00, null = 10, unsupported = 11
-    sig = binary(Nsym, Nsamples, command | drone.regnohash | bull | data)
+       bull = 0b11 # bull- dtype bits, 01 = float, int  = 00, null = 10, unsupported = 11  
+    sig = binary(Nsym, Nsamples, bitconstruct(command, drone.regnohash, bull, data, 0, 0b1))
     # ASK waveform generation
     Xask = x * sig
     samples = 2**14*Xask # The PlutoSDR expects samples to be between -2^14 and +2^14, not -1 and +1 like some SDRs
     for i in range(5):
         sdr.tx(samples) # transmit the batch of samples once
 
+def bitconstruct(cmd, regno, dtype, data, parity, id):
+   return(cmd<<58) | (regno<<42) | (dtype<<40) | (data<<8) | (parity<<1) | id

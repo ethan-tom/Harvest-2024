@@ -25,7 +25,11 @@ cmds={"emg_land_lat":0b000000,
       "cllsn":0b011010,
       "req_dalt":0b011011, 
       "acc_dalt":0b011100,
-      "query_alt":0b011101
+      "query_alt":0b011101,
+      "dat_resp": 0b011110, 
+      "rsclow": 0b011111,
+      "asclow": 0b100000,
+      "dsclow": 0b100001,
       }
 '''
 lat and long is longitude and latitiude ,
@@ -37,3 +41,5 @@ a is accept ,
 d is deny,
 sc= service ceiling ,br=bearing,
 wypnt is waypoint'''
+
+

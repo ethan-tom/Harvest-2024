@@ -31,16 +31,26 @@ class DroneBase:
     
     def set_path(self, newpath):
         if is_coliding(newpath):
-            raise BaseException()
+            raise collsionAlert()
         list_paths.append(newpath)
         if newpath.speed>self.max_speed:
-            raise SystemExit()
+            raise overspeedAlert()
         if not newpath==self.path:
             self.path = newpath
     
     def altitude_change(self, new_alt, station_sdr):
         if new_alt>self.up_ceiling or new_alt<self.lower_ceiling:
             raise SystemExit()
-        while 0:
+        while receive(self, station_sdr)==(bitconstruct(cmds["acc_dalt", self.regnohash, 0b11, 0, 0, 0])):
             transmit(self, new_alt, cmds["req_dalt"], station_sdr)
+        self.altitude=new_alt
+    
+    def updateall(self, station_sdr):
+        while receive(self, station_sdr)==(bitconstruct(cmds["a_change_br", self.regnohash, 0b11, 0, 0, 0])):
+            transmit(self, self.bearing, cmds["r_change_br"], station_sdr)
+        while receive(self, station_sdr)==(bitconstruct(cmds["a_spd_change", self.regnohash, 0b11, 0, 0, 0])):
+            transmit(self, self.current_path.speed, cmds["r_spd_change"], station_sdr)
+        cmd_set = ["qloc_lat", "qloc_long", "qspdmax", "qtype", "q_airspd", "qscup", "q_load"]
+        
+
 
