@@ -42,4 +42,10 @@ d is deny,
 sc= service ceiling ,br=bearing,
 wypnt is waypoint'''
 
+cmd_set = ["qloc_lat", "qloc_long", "qspdmax", "qtype", "q_airspd", "qscup", "q_load"]
 
+def checkdata(drone, station_sdr):
+      def createquerybit(cmdstr):
+            return bitconstruct(cmd[cmdstr], drone.regnohash, 0b11)
+      transmit(drone,0,cmd[cmd_set[0]], station_sdr)
+      object = receive()
