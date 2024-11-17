@@ -5,3 +5,6 @@ import points
 import cmds
 import exceptions
 import temporg
+import alt_adjust
+import exceptions
+import intersects
