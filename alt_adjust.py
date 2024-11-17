@@ -1,5 +1,9 @@
 import numpy as np
 
+if TYPE_CHECKING:
+    from ethan1 import waypointBase
+    from paths import PathBase
+    from drone_classes import DroneBase
 
 class waypointBase:
     def __init__(self, lat, long):
@@ -15,6 +19,12 @@ def round_to_fifty(x):
         return x - remainder
     else:
         return x + (50 - remainder)
+
+def isNearby(x: waypointBase‎, drone : DroneBase):
+	if  x.latitude>  0.000538 +drone.current_locat.latitude or x.latitude <  drone.current_locat.latitude-0.000538 :
+			if  x.longitude>  0.000538 +drone.current_locat.longitude or x.longitude <  drone.current_locat.longitude-0.000538 :
+				return True
+	return False
 
 def collisionAlert(drone):
 	for x in list_drones:
