@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 # all distances in meters, heights in meters, speeds in meters per second and times in seconds
 class DroneBase:
-    def __init__(self, locat_curr, path_curr: PathBase, maxspeed = 0):
+    def __init__(self, locat_curr, path_curr: PathBase, maxspeed = 0, final_dest):
         self.up_ceiling = 1200  # TODO: add adaptive upper ceiling based on drone type and usage
         self.lower_ceiling = 200 # TODO: add adaptive lower ceiling based on city topography
         self.emergency_speed = 5 # TODO: add adaptive emergency power based on drone type and usage
@@ -30,6 +30,7 @@ class DroneBase:
         self.max_accel_linear = 1
         self.max_turn_rate = 30 # in deg/s
         self.max_climb = 0.1 # in m/s 
+        self.final_dest = final_dest
 
     
     def set_path(self, newpath):
@@ -62,6 +63,8 @@ class DroneBase:
         self.speed=new_spd
     
     def updateall(self, station_sdr):
+        if isNearby(self.currentpath.pointB, self):
+            self.set_path(PathBase(self.current_loccat, self.final_dest))
         self.bearing = self.current_path.pathto.heading
         while not receive(self, station_sdr)==(bitconstruct(cmds["a_change_br", self.regnohash, 0b11, 0, 0, 0])):
             transmit(self, self.bearing, cmds["r_change_br"], station_sdr)
@@ -78,6 +81,8 @@ class DroneBase:
             self.truespeed = new[2]
         except badInfoAlert():
             pass
+        
+        
 
         
 
