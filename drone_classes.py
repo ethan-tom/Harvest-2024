@@ -20,8 +20,8 @@ class DroneBase:
         self.max_speed = 4 # TODO: add adaptive max speed based on drone type and usage
         self.priority = 0
         self.load_type = 0 # indexing : 0 - general purpose, 1 - transport, 2 - security, 3 - high piority transport
-        self.current_locat = locat_curr
-        self.current_path = path_curr
+        self.current_locat : waypointBase = locat_curr
+        self.current_path : PathBase = path_curr
         self.regno = int(np.loadtxt("reginfo.txt")[0])
         self.regnohash = hash(self.regno)
         self.flight_type = 0 # indexing : 0 - Multirotor, 1 - heavy multirotor, 2- fixed wing, 3- single rotor
@@ -30,7 +30,8 @@ class DroneBase:
 
     
     def set_path(self, newpath):
-        is_coliding(newpath)
+        if is_coliding(newpath):
+            raise BaseException()
         list_paths.append(newpath)
         if newpath.speed>self.max_speed:
             raise SystemExit()

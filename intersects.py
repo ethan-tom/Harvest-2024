@@ -1,9 +1,15 @@
+class Point: 
+    def __init__(self, x, y): 
+        self.x = x 
+        self.y = y
+
 def onSegment(p, q, r): 
-    if ( (q.long <= max(p.long, r.long)) and (q.long >= min(p.long, r.long)) and 
-           (q.lat <= max(p.lat, r.lat)) and (q.lat >= min(p.lat, r.lat))): 
+    if ( (q.x <= max(p.x, r.x)) and (q.x >= min(p.x, r.x)) and 
+           (q.y <= max(p.y, r.y)) and (q.y >= min(p.y, r.y))): 
         return True
     return False
   
+
 def orientation(p, q, r): 
     # to find the orientation of an ordered triplet (p,q,r) 
     # function returns the following values: 
@@ -14,7 +20,7 @@ def orientation(p, q, r):
     # See https://www.geeksforgeeks.org/orientation-3-ordered-points/amp/  
     # for details of below formula.  
       
-    val = (float(q.lat - p.lat) * (r.long - q.long)) - (float(q.long - p.long) * (r.lat - q.y)) 
+    val = (float(q.y - p.y) * (r.x - q.x)) - (float(q.x - p.x) * (r.y - q.y)) 
     if (val > 0): 
           
         # Clockwise orientation 
@@ -30,8 +36,12 @@ def orientation(p, q, r):
   
 # The main function that returns true if  
 # the line segment 'p1q1' and 'p2q2' intersect. 
-def doIntersect(p1,q1,p2,q2): 
-      
+def doIntersect(w1,w2,w3,w4): 
+    
+    p1 = Point(w1.lat, w1.long)
+    q1 = Point(w2.lat, w2.long)
+    p2 = Point(w3.lat, w3.long)
+    q2 = Point(w4.lat, w4.long)   
     # Find the 4 orientations required for  
     # the general and special cases 
     o1 = orientation(p1, q1, p2) 

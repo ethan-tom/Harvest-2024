@@ -15,16 +15,11 @@ def dummy_constructor(i):
 for i in range(100):
     list_drones.append(dummy_constructor(i))
 
-def is_colliding(oldpath):
-    pA, pB = oldpath.point_a, oldpath.point_b
-    ph1, lm1 = (pA.latitude, pA.longitude)*np.pi/180
-    for close in close_paths(pA, list_paths):
-        ph2, lm2 = (close.latitude, close.longitude)*np.pi/180
-        th13 = oldpath.bearing
-        th23 = 
-        try:
-            _, _, _, line_checker(ph1, lm1, th13, ph2, lm2, th23)
-        except BaseException:
+def is_coliding(path):
+    for closedrone in closest(list_drones, path.point_a):
+        if doIntersect(closedrone.current_locat, closedrone.current_path.paint_B, path.paint_B, path.point_a):
+            return True
+    return False
             
         
 
