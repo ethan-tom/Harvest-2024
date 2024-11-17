@@ -10,9 +10,6 @@ def parsein(indata, N, drone, inrate):
     for i in range(N):
        time_table = i*inrate
     
-    
- 
-       
 
 def receive(drone, station_sdr):
     sample_rate = 10000 # Hz

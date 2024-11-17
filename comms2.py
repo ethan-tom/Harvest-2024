@@ -19,8 +19,8 @@ def binary(sym, sym_len):
 from math import pi
 plt.close('all')
 # Carrier wave and binary waveform configuration parameters
-Fs = 1000 # Samples per second
-fc = 25 # Carrier frequency 100 Hz, 100 cycles/sec
+Fs = 2000 # Samples per second
+fc = 75 # Carrier frequency 100 Hz, 100 cycles/sec
 T = 1 # Total simulation time in seconds
 t = np.arange(0, T, 1/Fs)
 x =np.sin(2*pi*fc*t)
