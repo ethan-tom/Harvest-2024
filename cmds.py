@@ -52,7 +52,7 @@ wypnt is waypoint'''
 cmd_set = ["qloc_lat", "qloc_long", "qtype", "q_airspd", "qscup", "qsclow", "q_load"]
 
 def checkdata(drone : DroneBase, station_sdr):
-      out = []      
+      out = [0,0,0]      
       transmit(drone,0,cmd[cmd_set[0]], station_sdr)
       object = receive(drone, station_sdr)
       cmd_rx, regno, dtype, data, _, id = bit_deconstruct(object)
@@ -72,10 +72,18 @@ def checkdata(drone : DroneBase, station_sdr):
             raise badRfAlert()
       out[0] = data
 
-      verify_set = [drone.speed, drone.up_ceiling, drone.lower_ceiling]
+      transmit(drone,0,cmd[cmd_set[3]], station_sdr)
+      object = receive(drone, station_sdr)
+      cmd_rx, regno, dtype, data, _, id = bit_deconstruct(object)
+      if not (cmd_rx==cmds["dat_resp"] or regno==drone.regnohash or dtype==1 or id==1):
+            raise badRfAlert()
+      out[2] = data
 
-      for x in range(3):
-            transmit(drone,0,cmd[cmd_set[x+3]], station_sdr)
+
+      verify_set = [drone.up_ceiling, drone.lower_ceiling]
+
+      for x in range(2):
+            transmit(drone,0,cmd[cmd_set[x+4]], station_sdr)
             object = receive(drone, station_sdr)
             cmd_rx, regno, dtype, data, _, id = bit_deconstruct(object)
             if not (cmd_rx==cmds["dat_resp"] or regno==drone.regnohash or dtype==1):

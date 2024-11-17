@@ -1,5 +1,5 @@
 
-class collsionAlert(Exception):
+class collisionException(Exception):
     pass
 
 class ceilingsBreached(Exception):
