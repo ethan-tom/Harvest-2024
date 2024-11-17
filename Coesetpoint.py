@@ -1,24 +1,25 @@
 import math
  
 # A structure to represent a Point in 2D plane
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+class waypointBase:
+    def _init_(self, lat, long):
+        self.latitude = lat
+        self.longitude = long
+
  
 # Needed to sort array of points according to X coordinate
-def compareX(a, b):
+def comparelat(a, b):
     p1,  p2 = a, b
-    return (p1.x != p2.x) * (p1.x - p2.x) + (p1.y - p2.y)
+    return (p1.lat != p2.lat) * (p1.lat - p2.lat) + (p1.long - p2.long)
  
 # Needed to sort array of points according to Y coordinate
-def compareY(a, b):
+def comparelong(a, b):
     p1,  p2 = a, b
-    return (p1.y != p2.y) * (p1.y - p2.y) + (p1.x - p2.x)
+    return (p1.long != p2.long) * (p1.long - p2.long) + (p1.lat - p2.lat)
  
 # A utility function to find the distance between two points
 def dist(p1, p2):
-    return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2)
+    return math.sqrt((p1.lat - p2.lat)**2 + (p1.long - p2.long)**2)
  
 # A Brute Force method to return the smallest distance between two points
 # in P[] of size n
@@ -72,7 +73,7 @@ def closestUtil(Px, Py, n):
     Pyr = [None] * (n-mid)  # y sorted points on right of vertical line
     li = ri = 0  # indexes of left and right subarrays
     for i in range(n):
-        if ((Py[i].x < midPoint.x or (Py[i].x == midPoint.x and Py[i].y < midPoint.y)) and li<mid):
+        if ((Py[i].lat < midPoint.lat or (Py[i].lat == midPoint.lat and Py[i].long < midPoint.long)) and li<mid):
             Pyl[li] = Py[i]
             li += 1
         else:
@@ -93,7 +94,7 @@ def closestUtil(Px, Py, n):
     strip = [None] * n
     j = 0
     for i in range(n):
-        if abs(Py[i].x - midPoint.x) < d:
+        if abs(Py[i].lat - midPoint.lat) < d:
             strip[j] = Py[i]
             j += 1
  
@@ -106,8 +107,8 @@ def closestUtil(Px, Py, n):
 def closest(P, n):
     Px = P
     Py = P
-    Px.sort(key=lambda x:x.x)
-    Py.sort(key=lambda x:x.y)
+    Px.sort(key=lambda x:x.lat)
+    Py.sort(key=lambda x:x.long)
  
     # Use recursive function closestUtil() to find the smallest distance
     return closestUtil(Px, Py, n)
