@@ -16,7 +16,7 @@ def round_to_fifty(x):
     else:
         return x + (50 - remainder)
 
-def  collisionAlert(drone):
+def collisionAlert(drone):
 	for x in list_drones:
 		if  x.current_locat.latitude>  0.000538 +drone.current_locat.latitude or x.current_locat.latitude <  drone.current_locat.latitude-0.000538 :
 			if  x.current_locat.longitude>  0.000538 +drone.current_locat.longitude or x.current_locat.longitude <  drone.current_locat.longitude-0.000538 :
